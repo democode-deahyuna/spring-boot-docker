@@ -5,7 +5,7 @@ node {
 
     stage("Git Clone"){
 
-        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/rahulwagh/spring-boot-docker.git'
+        git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/democode-deahyuna/spring-boot-docker.git'
     }
 
      stage('Gradle Build') {
@@ -18,15 +18,15 @@ node {
         sh 'docker version'
         sh 'docker build -t jhooq-docker-demo .'
         sh 'docker image list'
-        sh 'docker tag jhooq-docker-demo rahulwagh17/jhooq-docker-demo:jhooq-docker-demo'
+        sh 'docker tag jhooq-docker-demo ducanhct228/jhooq-docker-demo:jhooq-docker-demo'
     }
 
     withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]) {
-        sh 'docker login -u rahulwagh17 -p $PASSWORD'
+        sh 'docker login -u ducanhct228 -p $PASSWORD'
     }
 
     stage("Push Image to Docker Hub"){
-        sh 'docker push  rahulwagh17/jhooq-docker-demo:jhooq-docker-demo'
+        sh 'docker push  ducanhct228/jhooq-docker-demo:jhooq-docker-demo'
     }
     
     stage('Put k8s-spring-boot-deployment.yml onto k8smaster') {
